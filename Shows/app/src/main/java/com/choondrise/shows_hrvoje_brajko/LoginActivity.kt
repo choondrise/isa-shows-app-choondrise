@@ -19,31 +19,39 @@ class LoginActivity : AppCompatActivity() {
     private fun initLoginButton() {
         binding.loginButton.setOnClickListener {
 
-            if (validateEmail(binding.editTextEmail.text.toString())) {
-                if (validatePassword(binding.editTextPassword.text.toString())) {
-                    val intent = WelcomeActivity.buildIntent(
-                        this,
-                        binding.editTextEmail.text.toString(),
-                        binding.editTextPassword.text.toString())
-                    startActivity(intent)
-                } else {
-                    binding.editTextPassword.error = "Password needs to contain at least 6 characters"
-                }
-            } else {
-                binding.editTextEmail.error = "Email needs to contain at least 1 character and '@' sign"
+            if (validateEmail(binding.editTextEmail.text.toString()) &&
+                validatePassword(binding.editTextPassword.text.toString())) {
+                val intent = WelcomeActivity.buildIntent(
+                    this,
+                    binding.editTextEmail.text.toString(),
+                    binding.editTextPassword.text.toString()
+                )
+                startActivity(intent)
             }
         }
     }
 
     private fun validateEmail(email: String) : Boolean {
-        if (email.isEmpty()) return false
-
         val regex = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)".toRegex()
-        return email.matches(regex)
+        if (email.length < 2) {
+            binding.emailInput.error = "Email needs to contain at least 1 character"
+            return false
+        } else if (!email.matches(regex)){
+            binding.emailInput.error = "Email does not match email regex"
+            return false
+        } else {
+            binding.emailInput.error = null
+            return true
+        }
     }
 
     private fun validatePassword(password: String) : Boolean {
-        if (password.isEmpty()) return false
-        return password.length > 5
+        if (password.length < 6) {
+            binding.passwordInput.error = "Password needs to contain at least 5 characters"
+            return false
+        } else {
+            binding.passwordInput.error = null
+            return true
+        }
     }
 }
