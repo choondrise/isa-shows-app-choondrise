@@ -18,21 +18,27 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initLoginButton() {
         binding.loginButton.setOnClickListener {
-            val intent = WelcomeActivity.buildIntent(
-                this,
-                binding.editTextEmail.text.toString(),
-                binding.editTextPassword.text.toString())
 
-            if (validateEmail(binding.editTextEmail.text.toString()) &&
-                validatePassword(binding.editTextPassword.text.toString()))
-                startActivity(intent)
+            if (validateEmail(binding.editTextEmail.text.toString())) {
+                if (validatePassword(binding.editTextPassword.text.toString())) {
+                    val intent = WelcomeActivity.buildIntent(
+                        this,
+                        binding.editTextEmail.text.toString(),
+                        binding.editTextPassword.text.toString())
+                    startActivity(intent)
+                } else {
+                    binding.editTextPassword.error = "Password needs to contain at least 6 characters"
+                }
+            } else {
+                binding.editTextEmail.error = "Email needs to contain at least 1 character and '@' sign"
+            }
         }
     }
 
     private fun validateEmail(email: String) : Boolean {
         if (email.isEmpty()) return false
 
-        val regex = "^[A-Za-z](.*)([@])(.+)(\\.)(.{1,})".toRegex()
+        val regex = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)".toRegex()
         return email.matches(regex)
     }
 
