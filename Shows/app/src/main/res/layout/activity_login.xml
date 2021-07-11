@@ -97,6 +97,7 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/white"
@@ -128,6 +129,7 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/white"
@@ -138,6 +140,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/loginButton"
         android:layout_width="342dp"
         android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
