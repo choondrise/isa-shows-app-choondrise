@@ -3,6 +3,7 @@
 
     <style name="CustomTextInputLayout_overlay">
         <item name="colorOnSurface">@android:color/white</item>
+        <item name="boxStrokeColor">@android:color/white</item>
         <item name="colorPrimary">@android:color/white</item>
     </style>
 
