@@ -2,6 +2,8 @@ package com.choondrise.shows_hrvoje_brajko
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import com.choondrise.shows_hrvoje_brajko.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -14,6 +16,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoginButton()
+        initTextChangeListeners()
     }
 
     private fun initLoginButton() {
@@ -29,6 +32,25 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun initTextChangeListeners() {
+        binding.editTextEmail.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().length > 1 &&
+                        binding.editTextPassword.text.toString().length > 5
+            }
+        })
+        binding.editTextPassword.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().length > 1 &&
+                        binding.editTextPassword.text.toString().length > 5
+            }
+        })
     }
 
     private fun validateEmail(email: String) : Boolean {
