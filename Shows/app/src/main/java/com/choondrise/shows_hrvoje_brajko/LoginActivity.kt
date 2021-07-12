@@ -59,18 +59,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateEmail(email: String) : Boolean {
         val regex = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)".toRegex()
-        if (email.isEmpty()) {
+        return if (email.isEmpty()) {
             binding.emailInput.isErrorEnabled = true
             binding.emailInput.error = "Email needs to contain at least 1 character"
-            return false
+            false
         } else if (!email.matches(regex)){
             binding.emailInput.isErrorEnabled = true
             binding.emailInput.error = "Email does not match email regex"
-            return false
+            false
         } else {
             binding.emailInput.isErrorEnabled = false
             binding.emailInput.error = null
-            return true
+            true
         }
     }
 
