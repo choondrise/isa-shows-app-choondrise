@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().length > 1 &&
+                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
                         binding.editTextPassword.text.toString().length > 5
             }
         })
@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().length > 1 &&
+                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
                         binding.editTextPassword.text.toString().length > 5
             }
         })
@@ -55,13 +55,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateEmail(email: String) : Boolean {
         val regex = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)".toRegex()
-        if (email.length < 2) {
+        if (email.length < 1) {
+            binding.emailInput.isErrorEnabled = true
             binding.emailInput.error = "Email needs to contain at least 1 character"
             return false
         } else if (!email.matches(regex)){
+            binding.emailInput.isErrorEnabled = true
             binding.emailInput.error = "Email does not match email regex"
             return false
         } else {
+            binding.emailInput.isErrorEnabled = false
             binding.emailInput.error = null
             return true
         }
@@ -69,9 +72,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validatePassword(password: String) : Boolean {
         if (password.length < 6) {
+            binding.emailInput.isErrorEnabled = true
             binding.passwordInput.error = "Password needs to contain at least 5 characters"
             return false
         } else {
+            binding.emailInput.isErrorEnabled = false
             binding.passwordInput.error = null
             return true
         }
