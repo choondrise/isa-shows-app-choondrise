@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.core.widget.doOnTextChanged
 import com.choondrise.shows_hrvoje_brajko.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -43,6 +44,9 @@ class LoginActivity : AppCompatActivity() {
                         binding.editTextPassword.text.toString().length > 5
             }
         })
+        /*binding.editTextEmail.doOnTextChanged { text, start, before, count ->
+
+        }*/
         binding.editTextPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -55,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateEmail(email: String) : Boolean {
         val regex = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)".toRegex()
-        if (email.length < 1) {
+        if (email.isEmpty()) {
             binding.emailInput.isErrorEnabled = true
             binding.emailInput.error = "Email needs to contain at least 1 character"
             return false
