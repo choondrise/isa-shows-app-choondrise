@@ -36,25 +36,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initTextChangeListeners() {
-        binding.editTextEmail.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
-                        binding.editTextPassword.text.toString().length > 5
-            }
-        })
-        /*binding.editTextEmail.doOnTextChanged { text, start, before, count ->
+        binding.editTextEmail.doOnTextChanged { _, _, _, _ ->
+            onTextChange()
+        }
 
-        }*/
-        binding.editTextPassword.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
-                        binding.editTextPassword.text.toString().length > 5
-            }
-        })
+        binding.editTextPassword.doOnTextChanged { _, _, _, _ ->
+            onTextChange()
+        }
     }
 
     private fun validateEmail(email: String) : Boolean {
@@ -84,5 +72,10 @@ class LoginActivity : AppCompatActivity() {
             binding.passwordInput.error = null
             return true
         }
+    }
+
+    private fun onTextChange() {
+        binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
+                binding.editTextPassword.text.toString().length > 5
     }
 }
