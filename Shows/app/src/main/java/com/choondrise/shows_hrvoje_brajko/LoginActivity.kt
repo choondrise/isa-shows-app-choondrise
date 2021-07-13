@@ -25,12 +25,12 @@ class LoginActivity : AppCompatActivity() {
 
             if (validateEmail(binding.editTextEmail.text.toString()) &&
                 validatePassword(binding.editTextPassword.text.toString())) {
-                val intent = WelcomeActivity.buildIntent(
+                /*val intent = ShowsActivity.buildIntent(
                     this,
                     binding.editTextEmail.text.toString(),
                     binding.editTextPassword.text.toString()
                 )
-                startActivity(intent)
+                startActivity(intent)*/
             }
         }
     }
