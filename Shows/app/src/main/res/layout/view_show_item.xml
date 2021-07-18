@@ -23,7 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="193dp"
                 android:scaleType="fitCenter"
-                tools:src="@drawable/krim_tim_2"
+                android:layout_centerHorizontal="true"
+                tools:src="@drawable/vecernja_skola"
                 />
 
             <TextView
@@ -33,6 +34,7 @@
                 android:layout_below="@+id/showImage"
                 android:layout_marginTop="1dp"
                 android:paddingStart="24dp"
+                android:paddingTop="16dp"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -46,6 +48,7 @@
                 android:textSize="14sp"
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
+                android:paddingBottom="17dp"
                 tools:text="Najbolji kriminalisticki show ikad">
 
             </TextView>
