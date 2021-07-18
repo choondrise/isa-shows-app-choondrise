@@ -11,6 +11,10 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
+    companion object {
+        private const val PASSWORD_MAX_LENGTH = 6
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -25,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (validateEmail(binding.editTextEmail.text.toString()) &&
                 validatePassword(binding.editTextPassword.text.toString())) {
-                /*val intent = ShowsActivity.buildIntent(
+                /*val intent = WelcomeActivity.buildIntent(
                     this,
                     binding.editTextEmail.text.toString(),
                     binding.editTextPassword.text.toString()
@@ -63,19 +67,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validatePassword(password: String) : Boolean {
-        if (password.length < 6) {
+        return if (password.length < PASSWORD_MAX_LENGTH) {
             binding.emailInput.isErrorEnabled = true
             binding.passwordInput.error = "Password needs to contain at least 5 characters"
-            return false
+            false
         } else {
             binding.emailInput.isErrorEnabled = false
             binding.passwordInput.error = null
-            return true
+            true
         }
     }
 
     private fun onTextChange() {
         binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
-                binding.editTextPassword.text.toString().length > 5
+                binding.editTextPassword.text.toString().length > PASSWORD_MAX_LENGTH - 1
     }
 }
