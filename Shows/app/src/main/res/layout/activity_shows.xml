@@ -32,6 +32,7 @@
         android:id="@+id/shows_empty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Your shows are not showing. Get it?"
         app:layout_constraintTop_toTopOf="@id/shows_empty_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
