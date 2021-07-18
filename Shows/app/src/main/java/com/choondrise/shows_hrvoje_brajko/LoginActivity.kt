@@ -29,12 +29,12 @@ class LoginActivity : AppCompatActivity() {
 
             if (validateEmail(binding.editTextEmail.text.toString()) &&
                 validatePassword(binding.editTextPassword.text.toString())) {
-                /*val intent = WelcomeActivity.buildIntent(
+                val intent = ShowsActivity.buildIntent(
                     this,
                     binding.editTextEmail.text.toString(),
                     binding.editTextPassword.text.toString()
                 )
-                startActivity(intent)*/
+                startActivity(intent)
             }
         }
     }
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
             binding.emailInput.error = "Email does not match email regex"
             false
         } else {
-            binding.emailInput.isErrorEnabled = false
+            // binding.emailInput.isErrorEnabled = false
             binding.emailInput.error = null
             true
         }
@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
             binding.passwordInput.error = "Password needs to contain at least 5 characters"
             false
         } else {
-            binding.emailInput.isErrorEnabled = false
+            // binding.emailInput.isErrorEnabled = false
             binding.passwordInput.error = null
             true
         }
