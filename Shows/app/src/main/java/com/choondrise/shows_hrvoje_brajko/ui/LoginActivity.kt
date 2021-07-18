@@ -1,9 +1,7 @@
-package com.choondrise.shows_hrvoje_brajko
+package com.choondrise.shows_hrvoje_brajko.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.core.widget.doOnTextChanged
 import com.choondrise.shows_hrvoje_brajko.databinding.ActivityLoginBinding
 
