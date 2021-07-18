@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choondrise.shows_hrvoje_brajko.R
 import com.choondrise.shows_hrvoje_brajko.databinding.ActivityShowsBinding
@@ -12,6 +13,7 @@ import com.choondrise.shows_hrvoje_brajko.model.Show
 class ShowsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityShowsBinding
+    private var adapter: ShowsAdapter? = null
 
     companion object {
         private const val EXTRA_EMAIL = "EXTRA_EMAIL"
@@ -62,5 +64,9 @@ class ShowsActivity : AppCompatActivity() {
 
     private fun initRecycleView() {
         binding.showRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapter = ShowsAdapter(shows) { name ->
+            Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
+        }
+        binding.showRecycler.adapter = adapter
     }
 }
