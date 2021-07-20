@@ -5,7 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.ShowsActivity">
+    tools:ignore="RtlSymmetry"
+    tools:context=".ui.ShowsFragment">
+
+    <TextView
+        android:id="@+id/shows_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="23dp"
+        android:paddingTop="64dp"
+        android:paddingBottom="18dp"
+        android:text="@string/shows"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        android:textColor="@color/black"
+        >
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/showRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/shows_title"
+        tools:listitem="@layout/view_show_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -20,14 +44,6 @@
         app:borderWidth="0dp">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/showRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/view_show_item">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/shows_empty_image"
