@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choondrise.shows_hrvoje_brajko.databinding.ActivityShowDetailsBinding
 import com.choondrise.shows_hrvoje_brajko.databinding.DialogAddReviewBinding
@@ -68,6 +69,7 @@ class ShowDetailsActivity : AppCompatActivity() {
         binding.reviewRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = ReviewsAdapter(reviews) { _, _, _, _ -> Unit}
         binding.reviewRecycler.adapter = adapter
+        binding.reviewRecycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.ratingBar.isVisible = false
         binding.ratingTotal.isVisible = false
     }

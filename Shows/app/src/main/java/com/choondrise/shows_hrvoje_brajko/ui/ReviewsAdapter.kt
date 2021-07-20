@@ -2,6 +2,7 @@ package com.choondrise.shows_hrvoje_brajko.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.choondrise.shows_hrvoje_brajko.databinding.ViewReviewItemBinding
 import com.choondrise.shows_hrvoje_brajko.model.Review
@@ -34,7 +35,12 @@ class ReviewsAdapter(
         fun bind(item: Review) {
             binding.username.text = item.name
             binding.numberOfStars.text = item.rating.toString()
-            binding.reviewDescription.text = item.reviewText
+            if (item.reviewText.trim().isEmpty()) {
+                binding.reviewDescription.isVisible = false
+            } else {
+                binding.reviewDescription.isVisible = true
+                binding.reviewDescription.text = item.reviewText
+            }
         }
     }
 }
