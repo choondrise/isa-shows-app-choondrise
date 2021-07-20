@@ -8,7 +8,7 @@ import com.choondrise.shows_hrvoje_brajko.model.Show
 
 class ShowsAdapter(
     private var items: List<Show>,
-    private val onClickCallback: (String) -> Unit
+    private val onClickCallback: (Int, String, String, Int) -> Unit
 ) : RecyclerView.Adapter<ShowsAdapter.ShowsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowsViewHolder {
@@ -24,13 +24,6 @@ class ShowsAdapter(
         holder.bind(items[position])
     }
 
-    // TODO: Public fun setItems (with superhero list)
-
-    fun addItem (show: Show) {
-        items = items + show
-        notifyItemInserted(items.lastIndex)
-    }
-
     inner class ShowsViewHolder(private val binding: ViewShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Show) {
@@ -39,7 +32,7 @@ class ShowsAdapter(
             binding.showImage.setImageResource(item.imageResourceId)
 
             binding.root.setOnClickListener {
-                onClickCallback(item.name)
+                onClickCallback(item.ID, item.name, item.description, item.imageResourceId)
             }
         }
     }

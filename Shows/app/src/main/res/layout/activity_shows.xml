@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.ShowsActivity">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_show_hide"
+        android:backgroundTint="#52368C"
+        app:borderWidth="0dp">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/showRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/view_show_item"
-        >
+        tools:listitem="@layout/view_show_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -20,25 +33,21 @@
         android:id="@+id/shows_empty_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_shows_empty_state"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="335dp"
-        >
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_shows_empty_state">
+
     </ImageView>
 
     <TextView
         android:id="@+id/shows_empty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your shows are not showing. Get it?"
-        app:layout_constraintTop_toTopOf="@id/shows_empty_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_below="@id/shows_empty_image"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
-        >
+        android:text="Your shows are not showing. Get it?">
 
     </TextView>
 
-</LinearLayout>
+</RelativeLayout>

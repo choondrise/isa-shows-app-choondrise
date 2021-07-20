@@ -49,6 +49,7 @@
                 android:paddingStart="24dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="17dp"
+                android:paddingEnd="24dp"
                 tools:text="Najbolji kriminalisticki show ikad">
 
             </TextView>
