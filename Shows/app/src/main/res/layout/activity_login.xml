@@ -20,8 +20,8 @@
     <ImageView
         android:id="@+id/top_right_illustration"
         android:src="@drawable/top_right_illustration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="265dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
@@ -29,8 +29,8 @@
     <ImageView
         android:id="@+id/logo_horizontal_white"
         android:src="@drawable/logo_horizontal_white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="34dp"
+        android:layout_height="38dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="181dp"
@@ -38,9 +38,20 @@
         />
 
     <ImageView
+        android:id="@+id/showsTitle"
+        android:layout_width="104dp"
+        android:layout_height="41dp"
+        android:src="@drawable/shows_title"
+        app:layout_constraintStart_toEndOf="@id/logo_horizontal_white"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="178dp"
+        android:layout_marginStart="19dp"
+        />
+
+    <ImageView
         android:id="@+id/loginTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="104dp"
+        android:layout_height="41dp"
         android:src="@drawable/login_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
