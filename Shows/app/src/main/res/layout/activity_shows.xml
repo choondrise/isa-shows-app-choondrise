@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    tools:ignore="RtlSymmetry"
     tools:context=".ui.ShowsActivity">
 
     <TextView
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         android:paddingStart="23dp"
         android:paddingTop="64dp"
-        android:text="Shows"
+        android:paddingBottom="18dp"
+        android:text="@string/shows"
         android:textStyle="bold"
         android:textSize="36sp"
         android:textColor="@color/black"
