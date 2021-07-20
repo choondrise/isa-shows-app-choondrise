@@ -7,6 +7,28 @@
     android:orientation="vertical"
     tools:context=".ui.ShowsActivity">
 
+    <TextView
+        android:id="@+id/shows_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="23dp"
+        android:paddingTop="64dp"
+        android:text="Shows"
+        android:textStyle="bold"
+        android:textSize="36sp"
+        android:textColor="@color/black"
+        >
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/showRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/shows_title"
+        tools:listitem="@layout/view_show_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="match_parent"
@@ -21,13 +43,6 @@
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/showRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/view_show_item">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/shows_empty_image"
@@ -35,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        tools:visibility="gone"
         android:src="@drawable/ic_shows_empty_state">
 
     </ImageView>
@@ -46,7 +62,8 @@
         android:layout_below="@id/shows_empty_image"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
-        android:text="Your shows are not showing. Get it?">
+        android:text="@string/your_shows_are_not_showing_get_it"
+        tools:visibility="gone">
 
     </TextView>
 
