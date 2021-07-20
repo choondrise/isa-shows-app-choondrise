@@ -124,6 +124,7 @@ class ShowDetailsActivity : AppCompatActivity() {
     }
 
     private fun initBackButton() {
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
