@@ -63,6 +63,7 @@ class ShowsFragment : Fragment() {
 
         initRecycleView()
         initShowHideButton()
+        initLogoutButton()
     }
     private fun initRecycleView() {
         binding.showRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -85,6 +86,13 @@ class ShowsFragment : Fragment() {
                 binding.showsEmptyImage.isVisible = false
                 binding.showsEmptyText.isVisible = false
             }
+        }
+    }
+
+    private fun initLogoutButton() {
+        binding.logoutButton.setOnClickListener {
+            val action = ShowsFragmentDirections.actionShowsToLogin()
+            findNavController().navigate(action)
         }
     }
 
