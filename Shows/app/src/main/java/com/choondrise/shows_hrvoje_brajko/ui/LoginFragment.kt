@@ -1,22 +1,37 @@
 package com.choondrise.shows_hrvoje_brajko.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
-import com.choondrise.shows_hrvoje_brajko.databinding.ActivityLoginBinding
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.choondrise.shows_hrvoje_brajko.databinding.FragmentLoginBinding
 
-class LoginActivity : AppCompatActivity() {
+class LoginFragment : Fragment() {
 
-    private lateinit var binding: ActivityLoginBinding
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         private const val PASSWORD_MAX_LENGTH = 6
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initLoginButton()
         initTextChangeListeners()
@@ -27,12 +42,8 @@ class LoginActivity : AppCompatActivity() {
 
             if (validateEmail(binding.editTextEmail.text.toString()) &&
                 validatePassword(binding.editTextPassword.text.toString())) {
-                val intent = ShowsActivity.buildIntent(
-                    this,
-                    binding.editTextEmail.text.toString(),
-                    binding.editTextPassword.text.toString()
-                )
-                startActivity(intent)
+                val action = LoginFragmentDirections.actionLoginToShows(binding.editTextEmail.text.toString())
+                findNavController().navigate(action)
             }
         }
     }
@@ -58,19 +69,17 @@ class LoginActivity : AppCompatActivity() {
             binding.emailInput.error = "Email does not match email regex"
             false
         } else {
-            // binding.emailInput.isErrorEnabled = false
             binding.emailInput.error = null
             true
         }
     }
 
     private fun validatePassword(password: String) : Boolean {
-        return if (password.length < PASSWORD_MAX_LENGTH) {
+        return if (password.length < LoginFragment.PASSWORD_MAX_LENGTH) {
             binding.emailInput.isErrorEnabled = true
             binding.passwordInput.error = "Password needs to contain at least 5 characters"
             false
         } else {
-            // binding.emailInput.isErrorEnabled = false
             binding.passwordInput.error = null
             true
         }
@@ -78,6 +87,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun onTextChange() {
         binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
-                binding.editTextPassword.text.toString().length > PASSWORD_MAX_LENGTH - 1
+                binding.editTextPassword.text.toString().length > LoginFragment.PASSWORD_MAX_LENGTH - 1
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

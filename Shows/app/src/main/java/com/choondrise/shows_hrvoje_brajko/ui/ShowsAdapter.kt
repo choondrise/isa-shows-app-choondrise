@@ -8,7 +8,7 @@ import com.choondrise.shows_hrvoje_brajko.model.Show
 
 class ShowsAdapter(
     private var items: List<Show>,
-    private val onClickCallback: (Int, String, String, Int) -> Unit
+    private val onClickCallback: (String, String, Int) -> Unit
 ) : RecyclerView.Adapter<ShowsAdapter.ShowsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowsViewHolder {
@@ -32,7 +32,7 @@ class ShowsAdapter(
             binding.showImage.setImageResource(item.imageResourceId)
 
             binding.root.setOnClickListener {
-                onClickCallback(item.ID, item.name, item.description, item.imageResourceId)
+                onClickCallback(item.name, item.description, item.imageResourceId)
             }
         }
     }
