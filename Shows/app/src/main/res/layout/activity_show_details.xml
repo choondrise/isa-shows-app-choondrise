@@ -38,7 +38,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:titleTextColor="@color/black">
+                    tools:title="Vecernja skola"
+                    app:titleTextAppearance="@font/roboto">
 
                 </androidx.appcompat.widget.Toolbar>
 
@@ -52,9 +53,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="23dp"
                         android:layout_marginTop="72dp"
-                        android:textColor="@color/black"
-                        android:textSize="36sp"
-                        android:textStyle="bold">
+                        android:fontFamily="@font/roboto"
+                        android:textSize="36sp">
 
                     </TextView>
 
@@ -76,18 +76,21 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/image_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="193dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="160dp"
+                    android:layout_marginHorizontal="25dp"
                     app:cardCornerRadius="4dp">
 
                     <ImageView
                         android:id="@+id/show_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:maxHeight="352dp"
+                        android:maxWidth="344dp"
                         android:layout_gravity="center_horizontal"
-                        android:scaleType="fitCenter"
+                        android:scaleType="center"
                         tools:src="@drawable/vecernja_skola">
 
                     </ImageView>

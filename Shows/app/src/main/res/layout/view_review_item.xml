@@ -31,7 +31,7 @@
         android:layout_marginTop="34dp"
         android:textColor="#52368C"
         android:textSize="15sp"
-        tools:text="fejk ime i prezime i prezim cdjcd"
+        tools:text="fejk ime i prezime i prezime"
         android:maxLines="1"
         android:ellipsize="end"/>
 
@@ -64,10 +64,11 @@
 
     <TextView
         android:id="@+id/review_description"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/profile_icon"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="17dp"
