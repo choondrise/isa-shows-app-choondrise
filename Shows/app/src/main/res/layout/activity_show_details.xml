@@ -76,16 +76,16 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/image_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="193dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="160dp"
                     app:cardCornerRadius="4dp">
 
                     <ImageView
                         android:id="@+id/show_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
                         android:scaleType="fitCenter"
                         tools:src="@drawable/vecernja_skola">

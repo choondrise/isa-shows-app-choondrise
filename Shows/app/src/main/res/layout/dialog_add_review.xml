@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    style="@style/RoundedDialog">
+    style="@style/BottomSheet">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Write a review"
+        android:text="@string/write_a_review"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:layout_marginTop="40dp"
@@ -37,7 +37,7 @@
         android:layout_marginTop="34dp"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:hint="Comment"
+        android:hint="@string/comment"
         android:textColorHint="#52368C"
         app:boxStrokeColor="#52368C"
         app:boxStrokeWidth="1dp"
@@ -61,9 +61,8 @@
         android:layout_marginTop="34dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="25dp"
-        android:layout_alignParentBottom="true"
         android:backgroundTint="#52368C"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textSize="17sp"
         android:textAlignment="center"
         android:textAllCaps="false"

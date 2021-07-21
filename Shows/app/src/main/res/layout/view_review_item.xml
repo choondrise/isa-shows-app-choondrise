@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:ignore="ContentDescription"
+    android:clipChildren="true">
 
     <ImageView
         android:id="@+id/profile_icon"
         android:layout_width="52dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_profile_placeholder"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="25dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_profile_placeholder">
 
     </ImageView>
 
     <TextView
         android:id="@+id/username"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/profile_icon"
+        app:layout_constraintStart_toEndOf="@id/profile_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/number_of_stars"
         android:layout_marginStart="18dp"
         android:layout_marginTop="34dp"
-        tools:text="fejk ime i prezime"
         android:textColor="#52368C"
-        android:textSize="15sp">
-
-    </TextView>
+        android:textSize="15sp"
+        tools:text="fejk ime i prezime i prezim cdjcd"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/number_of_stars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constrainedHeight="true"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="47dp"
-        tools:text="2"
         android:textColor="#52368C"
         android:textSize="15sp"
-        >
+        tools:text="2">
 
     </TextView>
 
@@ -47,10 +54,11 @@
         android:id="@+id/full_star"
         android:layout_width="18dp"
         android:layout_height="16dp"
-        android:src="@drawable/star_full"
-        android:layout_alignParentEnd="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="34dp"
-        android:layout_marginEnd="25dp">
+        android:layout_marginEnd="25dp"
+        android:src="@drawable/star_full">
 
     </ImageView>
 
@@ -58,11 +66,13 @@
         android:id="@+id/review_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_icon"
+        app:layout_constraintTop_toBottomOf="@id/profile_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="25dp"
         android:layout_marginTop="17dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginHorizontal="25dp">
+        android:layout_marginBottom="16dp">
 
     </TextView>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
