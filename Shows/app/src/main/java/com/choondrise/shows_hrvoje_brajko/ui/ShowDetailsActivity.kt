@@ -2,10 +2,9 @@ package com.choondrise.shows_hrvoje_brajko.ui
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,7 +67,7 @@ class ShowDetailsActivity : AppCompatActivity() {
 
     private fun initRecycleView() {
         binding.reviewRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        adapter = ReviewsAdapter(reviews) { _, _, _, _ -> Unit}
+        adapter = ReviewsAdapter(reviews) { _, _, _, _ -> }
         binding.reviewRecycler.adapter = adapter
         binding.reviewRecycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.ratingBar.isVisible = false
