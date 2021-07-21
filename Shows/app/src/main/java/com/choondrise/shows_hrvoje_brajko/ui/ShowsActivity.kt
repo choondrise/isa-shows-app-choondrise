@@ -33,11 +33,10 @@ class ShowsActivity : AppCompatActivity() {
     }
 
     private val shows = listOf(
-        Show(0, "Zabranjena ljubav",
-            "Brother and sister twins separated at birth meet eachother nearly " +
-                "two decades later not knowing about their blood relation. The two fall in love and that is only " +
-                "the peak of the iceberg for what is yet to come.",
-            R.drawable.zabranjena_ljubav
+        Show(0, "Bitange i princeze",
+            "A comedy about five young adults who happen to live " +
+                    "in the same building and gather in a pub called 'Bitange i princeze'.",
+            R.drawable.bitange_i_princeze
         ),
         Show(1, "Vecernja skola",
             "Humorous tv show about a teacher and his middle-aged students " +
