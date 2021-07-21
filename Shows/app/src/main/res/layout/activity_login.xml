@@ -46,25 +46,27 @@
         android:layout_marginStart="56dp"
         />
 
-    <ImageView
+    <TextView
         android:id="@+id/showsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxHeight="48dp"
         android:maxWidth="104dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/shows_title"
         app:layout_constraintStart_toEndOf="@id/logo_horizontal_white"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="186dp"
+        android:layout_marginTop="178dp"
         android:layout_marginStart="19dp"
+        android:text="@string/shows"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:fontFamily="@font/roboto_black"
         />
 
-    <ImageView
+    <TextView
         android:id="@+id/loginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/login_title"
         android:adjustViewBounds="true"
         android:maxWidth="104dp"
         android:maxHeight="48dp"
@@ -74,6 +76,10 @@
         android:layout_marginTop="373dp"
         android:layout_marginBottom="430dp"
         android:layout_marginStart="24dp"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:fontFamily="@font/roboto_black"
         />
 
     <TextView
