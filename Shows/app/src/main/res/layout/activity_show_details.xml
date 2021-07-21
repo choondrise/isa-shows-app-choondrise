@@ -38,8 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    tools:title="Vecernja skola"
-                    app:titleTextAppearance="@font/roboto">
+                    tools:title="Vecernja skola">
 
                 </androidx.appcompat.widget.Toolbar>
 
@@ -191,6 +190,9 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp"
+            android:fontFamily="@font/roboto"
+            android:lineHeight="45sp"
+            android:letterSpacing="0"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
