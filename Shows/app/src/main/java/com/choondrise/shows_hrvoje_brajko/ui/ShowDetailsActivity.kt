@@ -54,6 +54,7 @@ class ShowDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShowDetailsBinding.inflate(layoutInflater)
+        totalRating = 0
 
         getFromExtras()
         bindWithView()
