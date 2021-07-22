@@ -7,7 +7,7 @@ import com.choondrise.shows_hrvoje_brajko.R
 
 class ShowsViewModel : ViewModel() {
 
-    private val shows = listOf(
+    private val shows = mutableListOf<Show>(
         Show(0, "Zabranjena ljubav",
             "Brother and sister twins separated at birth meet eachother nearly " +
                     "two decades later not knowing about their blood relation. The two fall in love and that is only " +

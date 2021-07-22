@@ -41,20 +41,23 @@ class ShowsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getShowsLiveData().observe(viewLifecycleOwner, { shows ->
-            initRecycleView(shows)
-        })
-        viewModel.initShows()
-
         username = args.username.split("@")[0]
 
         binding.showsEmptyText.isVisible = false
         binding.showsEmptyImage.isVisible = false
 
+        initViewModel()
         initShowHideButton()
         initLogoutButton()
     }
-    
+
+    private fun initViewModel() {
+        viewModel.getShowsLiveData().observe(viewLifecycleOwner, { shows ->
+            initRecycleView(shows)
+        })
+        viewModel.initShows()
+    }
+
     private fun initRecycleView(shows: List<Show>) {
         binding.showRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = ShowsAdapter(shows) { name, description, imageResourceId ->
