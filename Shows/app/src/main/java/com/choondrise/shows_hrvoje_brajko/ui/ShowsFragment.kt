@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choondrise.shows_hrvoje_brajko.R
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentShowsBinding
 import com.choondrise.shows_hrvoje_brajko.model.Show
+import com.choondrise.shows_hrvoje_brajko.model.ShowsViewModel
 
 class ShowsFragment : Fragment() {
 
@@ -22,25 +24,7 @@ class ShowsFragment : Fragment() {
     private lateinit var username: String
 
     private val args: ShowsFragmentArgs by navArgs()
-
-    private val shows = listOf(
-        Show(0, "Zabranjena ljubav",
-            "Brother and sister twins separated at birth meet eachother nearly " +
-                    "two decades later not knowing about their blood relation. The two fall in love and that is only " +
-                    "the peak of the iceberg for what is yet to come.",
-            R.drawable.zabranjena_ljubav
-        ),
-        Show(1, "Vecernja skola",
-            "Humorous tv show about a teacher and his middle-aged students " +
-                    "who attend night school.",
-            R.drawable.vecernja_skola
-        ),
-        Show(2, "Nasa mala klinika",
-            "Sitcom about the staff, patients, guests and all kinds of different " +
-                    "events in a small clinic at the end of a town.",
-            R.drawable.nasa_mala_klinika
-        )
-    )
+    private val viewModel: ShowsViewModel by viewModels()
 
     override fun onCreateView(
 
@@ -56,16 +40,22 @@ class ShowsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.getShowsLiveData().observe(viewLifecycleOwner, { shows ->
+            initRecycleView(shows)
+        })
+        viewModel.initShows()
+
         username = args.username.split("@")[0]
 
         binding.showsEmptyText.isVisible = false
         binding.showsEmptyImage.isVisible = false
 
-        initRecycleView()
         initShowHideButton()
         initLogoutButton()
     }
-    private fun initRecycleView() {
+    
+    private fun initRecycleView(shows: List<Show>) {
         binding.showRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = ShowsAdapter(shows) { name, description, imageResourceId ->
             val action = ShowsFragmentDirections.actionShowsToShowDetails(username, name, description, imageResourceId)
