@@ -1,5 +1,6 @@
 package com.choondrise.shows_hrvoje_brajko.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,9 @@ class ShowsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (args.rememberMe) {
+            loggedIn()
+        }
 
         username = args.username.split("@")[0]
 
@@ -54,6 +58,7 @@ class ShowsFragment : Fragment() {
         initViewModel()
         initShowHideButton()
         initProfileIconButton()
+        // initBackButton()
     }
 
     private fun initViewModel() {
@@ -66,8 +71,7 @@ class ShowsFragment : Fragment() {
     private fun initRecycleView(shows: List<Show>) {
         binding.showRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = ShowsAdapter(shows) { name, description, imageResourceId ->
-            val action = ShowsFragmentDirections.actionShowsToShowDetails(username, name, description, imageResourceId)
-            findNavController().navigate(action)
+            navigateToShowDetailsFragment(name, description, imageResourceId)
         }
         binding.showRecycler.adapter = adapter
     }
@@ -103,11 +107,45 @@ class ShowsFragment : Fragment() {
             dialog?.dismiss()
         }
         dialogBinding.logoutButton.setOnClickListener {
-            val action = ShowsFragmentDirections.actionShowsToLogin()
-            findNavController().navigate(action)
+            clearPreferences()
+            navigateToLoginFragment()
             dialog?.dismiss()
         }
         dialog?.show()
+    }
+
+    private fun navigateToShowDetailsFragment(name: String, description: String, imageResourceId: Int) {
+        val action = ShowsFragmentDirections.actionShowsToShowDetails(username, name, description, imageResourceId)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToLoginFragment() {
+        val action = ShowsFragmentDirections.actionShowsToLogin()
+        findNavController().navigate(action)
+    }
+
+    private fun loggedIn() {
+        val prefs = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with(prefs.edit()) {
+            putBoolean("ALREADY_LOGGED_IN", true)
+            putString("USERNAME", args.username)
+            putString("PASSWORD", args.password)
+            apply()
+        }
+    }
+
+    private fun clearPreferences() {
+        val prefs = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        with(prefs.edit()) {
+            putBoolean("ALREADY_LOGGED_IN", false)
+            putString("USERNAME", null)
+            putString("PASSWORD", null)
+            apply()
+        }
+    }
+
+    private fun initBackButton() {
+        activity?.onBackPressed()?.let { activity?.finish() }
     }
 
     override fun onDestroyView() {

@@ -28,6 +28,16 @@
             app:argType="string">
 
         </argument>
+        <argument
+            android:name="password"
+            app:argType="string">
+
+        </argument>
+        <argument
+            android:name="remember_me"
+            app:argType="boolean">
+
+        </argument>
 
         <action
             android:id="@+id/action_shows_to_show_details"

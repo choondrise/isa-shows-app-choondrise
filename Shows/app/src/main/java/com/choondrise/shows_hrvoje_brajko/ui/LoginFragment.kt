@@ -1,9 +1,11 @@
 package com.choondrise.shows_hrvoje_brajko.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -33,18 +35,26 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val prefs = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val alreadyLoggedIn = prefs.getBoolean("ALREADY_LOGGED_IN", false)
+        if (alreadyLoggedIn) {
+            navigateToShowsFragment(prefs.getString("USERNAME", "").toString(), prefs.getString("PASSWORD", "").toString(), true)
+        }
+
         initLoginButton()
         initTextChangeListeners()
     }
 
     private fun initLoginButton() {
         binding.loginButton.setOnClickListener {
+            login(binding.editTextEmail.text.toString(), binding.editTextPassword.text.toString())
+        }
+    }
 
-            if (validateEmail(binding.editTextEmail.text.toString()) &&
-                validatePassword(binding.editTextPassword.text.toString())) {
-                val action = LoginFragmentDirections.actionLoginToShows(binding.editTextEmail.text.toString())
-                findNavController().navigate(action)
-            }
+    private fun login(username: String, password: String) {
+        if (validateEmail(binding.editTextEmail.text.toString()) &&
+            validatePassword(binding.editTextPassword.text.toString())) {
+            navigateToShowsFragment(username, password, binding.rememberMeCheckbox.isChecked)
         }
     }
 
@@ -75,7 +85,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun validatePassword(password: String) : Boolean {
-        return if (password.length < LoginFragment.PASSWORD_MAX_LENGTH) {
+        return if (password.length < PASSWORD_MAX_LENGTH) {
             binding.emailInput.isErrorEnabled = true
             binding.passwordInput.error = "Password needs to contain at least 5 characters"
             false
@@ -87,7 +97,12 @@ class LoginFragment : Fragment() {
 
     private fun onTextChange() {
         binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
-                binding.editTextPassword.text.toString().length > LoginFragment.PASSWORD_MAX_LENGTH - 1
+                binding.editTextPassword.text.toString().length > PASSWORD_MAX_LENGTH - 1
+    }
+
+    private fun navigateToShowsFragment(username: String, password: String, rememberMe: Boolean) {
+        val action = LoginFragmentDirections.actionLoginToShows(username, password, rememberMe)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
