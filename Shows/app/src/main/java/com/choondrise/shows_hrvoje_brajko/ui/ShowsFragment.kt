@@ -1,5 +1,6 @@
 package com.choondrise.shows_hrvoje_brajko.ui
 
+import android.Manifest
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.choondrise.shows_hrvoje_brajko.databinding.FragmentShowsBinding
 import com.choondrise.shows_hrvoje_brajko.model.Review
 import com.choondrise.shows_hrvoje_brajko.model.Show
 import com.choondrise.shows_hrvoje_brajko.model.ShowsViewModel
+import com.choondrise.shows_hrvoje_brajko.model.preparePermissionsContract
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ShowsFragment : Fragment() {
@@ -32,6 +34,10 @@ class ShowsFragment : Fragment() {
 
     private val args: ShowsFragmentArgs by navArgs()
     private val viewModel: ShowsViewModel by viewModels()
+
+    private val cameraPermissionForTakingProfilePicture = preparePermissionsContract(onPermissionsGranted = {
+        Toast.makeText(activity, "dao si mi permission a sad samo trebam otvoriti kameru", Toast.LENGTH_SHORT).show()
+    })
 
     override fun onCreateView(
 
@@ -60,7 +66,6 @@ class ShowsFragment : Fragment() {
         initViewModel()
         initShowHideButton()
         initProfileIconButton()
-        // initBackButton()
     }
 
     private fun initViewModel() {
@@ -104,15 +109,8 @@ class ShowsFragment : Fragment() {
         val dialogBinding = DialogProfileDetailsBinding.inflate(layoutInflater)
         dialog?.setContentView(dialogBinding.root)
         dialogBinding.username.text = args.username
-        dialogBinding.changeProfilePhotoButton.setOnClickListener {
-            Toast.makeText(activity, "Change profile photo", Toast.LENGTH_SHORT).show()
-            dialog?.dismiss()
-        }
-        dialogBinding.logoutButton.setOnClickListener {
-            clearPreferences()
-            navigateToLoginFragment()
-            dialog?.dismiss()
-        }
+        initChangeProfilePhotoButton(dialog, dialogBinding)
+        initLogoutButton(dialog, dialogBinding)
         dialog?.show()
     }
 
@@ -143,6 +141,21 @@ class ShowsFragment : Fragment() {
             putString("USERNAME", null)
             putString("PASSWORD", null)
             apply()
+        }
+    }
+
+    private fun initLogoutButton(dialog: BottomSheetDialog?, dialogBinding: DialogProfileDetailsBinding) {
+        dialogBinding.logoutButton.setOnClickListener {
+            clearPreferences()
+            navigateToLoginFragment()
+            dialog?.dismiss()
+        }
+    }
+
+    private fun initChangeProfilePhotoButton(dialog: BottomSheetDialog?, dialogBinding: DialogProfileDetailsBinding) {
+        dialogBinding.changeProfilePhotoButton.setOnClickListener {
+            cameraPermissionForTakingProfilePicture.launch(arrayOf(Manifest.permission.CAMERA))
+            dialog?.dismiss()
         }
     }
 
