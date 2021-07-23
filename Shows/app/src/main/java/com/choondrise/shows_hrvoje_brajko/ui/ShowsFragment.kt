@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,9 +12,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choondrise.shows_hrvoje_brajko.R
+import com.choondrise.shows_hrvoje_brajko.databinding.DialogAddReviewBinding
+import com.choondrise.shows_hrvoje_brajko.databinding.DialogProfileDetailsBinding
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentShowsBinding
+import com.choondrise.shows_hrvoje_brajko.model.Review
 import com.choondrise.shows_hrvoje_brajko.model.Show
 import com.choondrise.shows_hrvoje_brajko.model.ShowsViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ShowsFragment : Fragment() {
 
@@ -48,7 +53,7 @@ class ShowsFragment : Fragment() {
 
         initViewModel()
         initShowHideButton()
-        initLogoutButton()
+        initProfileIconButton()
     }
 
     private fun initViewModel() {
@@ -82,11 +87,27 @@ class ShowsFragment : Fragment() {
         }
     }
 
-    private fun initLogoutButton() {
+    private fun initProfileIconButton() {
         binding.logoutButton.setOnClickListener {
+            showBottomSheet()
+        }
+    }
+
+    private fun showBottomSheet() {
+        val dialog = activity?.let { BottomSheetDialog(it) }
+        val dialogBinding = DialogProfileDetailsBinding.inflate(layoutInflater)
+        dialog?.setContentView(dialogBinding.root)
+        dialogBinding.username.text = args.username
+        dialogBinding.changeProfilePhotoButton.setOnClickListener {
+            Toast.makeText(activity, "Change profile photo", Toast.LENGTH_SHORT).show()
+            dialog?.dismiss()
+        }
+        dialogBinding.logoutButton.setOnClickListener {
             val action = ShowsFragmentDirections.actionShowsToLogin()
             findNavController().navigate(action)
+            dialog?.dismiss()
         }
+        dialog?.show()
     }
 
     override fun onDestroyView() {

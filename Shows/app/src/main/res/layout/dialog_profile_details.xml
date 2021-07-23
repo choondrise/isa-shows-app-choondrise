@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription"
+    style="@style/RoundedDialog">
+
+    <ImageView
+        android:id="@+id/profile_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:maxWidth="95dp"
+        android:maxHeight="95dp"
+        android:src="@drawable/ic_profile_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/profile_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="29dp"
+        android:layout_marginHorizontal="25dp"
+        android:gravity="center"
+        tools:text="imenko.prezimenovic i ime i prezime moje ime tvoje prezime"
+        android:textSize="24sp"
+        android:textColor="@color/black">
+
+    </TextView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/change_profile_photo_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        android:layout_marginTop="62dp"
+        android:layout_marginHorizontal="25dp"
+        app:cornerRadius="22dp"
+        android:backgroundTint="@color/white"
+        app:strokeColor="#52368C"
+        app:strokeWidth="2dp"
+        android:text="@string/change_profile_photo"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:letterSpacing="0"
+        android:textColor="#52368C">
+
+    </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/change_profile_photo_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginBottom="26dp"
+        app:cornerRadius="22dp"
+        android:backgroundTint="#52368C"
+        android:text="@string/logout"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:letterSpacing="0"
+        android:textColor="@color/white">
+
+    </com.google.android.material.button.MaterialButton>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
