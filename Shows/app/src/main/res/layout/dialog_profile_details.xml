@@ -7,19 +7,22 @@
     tools:ignore="ContentDescription"
     style="@style/RoundedDialog">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="44dp"
         android:maxWidth="95dp"
         android:maxHeight="95dp"
-        android:src="@drawable/ic_profile_placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:strokeWidth="2dp"
+        app:strokeColor="#52368C"
+        android:src="@drawable/ic_profile_placeholder">
 
-    </ImageView>
+    </com.google.android.material.imageview.ShapeableImageView>
 
     <TextView
         android:id="@+id/username"
