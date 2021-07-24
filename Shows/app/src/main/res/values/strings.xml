@@ -18,4 +18,6 @@
     <string name="comment">Comment</string>
     <string name='no_permission' formatted='false'>Please check your permissions in Settings.</string>
     <string name='settings' formatted='false'>Settings</string>
+    <string name="register">Register</string>
+    <string name="repeat_password">Repeat password</string>
 </resources>

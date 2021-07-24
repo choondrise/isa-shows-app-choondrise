@@ -56,7 +56,8 @@
         android:textAllCaps="false"
         android:textStyle="bold"
         android:letterSpacing="0"
-        android:textColor="#52368C">
+        android:textColor="#52368C"
+        android:shadowColor="@color/white">
 
     </com.google.android.material.button.MaterialButton>
 
