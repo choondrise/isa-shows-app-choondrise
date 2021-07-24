@@ -2,8 +2,10 @@ package com.choondrise.shows_hrvoje_brajko.ui
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -47,7 +49,10 @@ class ShowsFragment : Fragment() {
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
-        private var CHANGED_PROFILE_ICON: Boolean = false
+        private const val CAMERA_ERROR_MESSAGE = "An error occurred while opening camera app"
+        private const val ALERT_DIALOG_MESSAGE = "Are you sure you want to log out?"
+        private const val ALERT_DIALOG_POSITIVE_TEXT = "Yes"
+        private const val ALERT_DIALOG_NEGATIVE_TEXT = "Cancel"
     }
 
     override fun onCreateView(
@@ -170,8 +175,7 @@ class ShowsFragment : Fragment() {
         dialogBinding: DialogProfileDetailsBinding
     ) {
         dialogBinding.logoutButton.setOnClickListener {
-            clearPreferences()
-            navigateToLoginFragment()
+            showLogoutAlertDialog()
             dialog?.dismiss()
         }
     }
@@ -203,7 +207,6 @@ class ShowsFragment : Fragment() {
             "com.choondrise.shows_hrvoje_brajko" + ".fileprovider",
             profilePhotoFile!!
         )
-        // Activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         dispatchTakePictureIntent(profilePhotoUri)
     }
 
@@ -215,7 +218,7 @@ class ShowsFragment : Fragment() {
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(
                 activity,
-                "An error occurred while opening camera app",
+                CAMERA_ERROR_MESSAGE,
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -250,6 +253,19 @@ class ShowsFragment : Fragment() {
             .skipMemoryCache(true)
             .circleCrop()
             .into(binding.logoutButton)
+    }
+
+    private fun showLogoutAlertDialog() {
+        val alertDialog = AlertDialog.Builder(activity)
+        alertDialog.setMessage(ALERT_DIALOG_MESSAGE)
+            .setPositiveButton(ALERT_DIALOG_POSITIVE_TEXT) { _, _ ->
+                clearPreferences()
+                navigateToLoginFragment()
+            }
+            .setNegativeButton(ALERT_DIALOG_NEGATIVE_TEXT) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onDestroyView() {
