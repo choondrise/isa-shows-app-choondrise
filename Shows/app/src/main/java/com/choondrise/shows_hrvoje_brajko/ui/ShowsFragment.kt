@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,15 +20,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.choondrise.shows_hrvoje_brajko.R
-import com.choondrise.shows_hrvoje_brajko.databinding.DialogAddReviewBinding
 import com.choondrise.shows_hrvoje_brajko.databinding.DialogProfileDetailsBinding
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentShowsBinding
 import com.choondrise.shows_hrvoje_brajko.model.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import androidx.core.app.ActivityCompat.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.choondrise.shows_hrvoje_brajko.R
 
 class ShowsFragment : Fragment() {
 
@@ -43,12 +40,14 @@ class ShowsFragment : Fragment() {
     private val viewModel: ShowsViewModel by viewModels()
     private lateinit var profilePhotoUri: Uri
 
-    private val cameraPermissionForTakingProfilePicture = preparePermissionsContract(onPermissionsGranted = {
-        startCameraContractUsingUri()
-    })
+    private val cameraPermissionForTakingProfilePicture =
+        preparePermissionsContract(onPermissionsGranted = {
+            startCameraContractUsingUri()
+        })
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
+        private var CHANGED_PROFILE_ICON: Boolean = false
     }
 
     override fun onCreateView(
@@ -88,7 +87,8 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initRecycleView(shows: List<Show>) {
-        binding.showRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.showRecycler.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = ShowsAdapter(shows) { name, description, imageResourceId ->
             navigateToShowDetailsFragment(name, description, imageResourceId)
         }
@@ -120,13 +120,23 @@ class ShowsFragment : Fragment() {
         val dialogBinding = DialogProfileDetailsBinding.inflate(layoutInflater)
         dialog?.setContentView(dialogBinding.root)
         dialogBinding.username.text = args.username
+        changeProfileIcon(dialogBinding)
         initChangeProfilePhotoButton(dialog, dialogBinding)
         initLogoutButton(dialog, dialogBinding)
         dialog?.show()
     }
 
-    private fun navigateToShowDetailsFragment(name: String, description: String, imageResourceId: Int) {
-        val action = ShowsFragmentDirections.actionShowsToShowDetails(username, name, description, imageResourceId)
+    private fun navigateToShowDetailsFragment(
+        name: String,
+        description: String,
+        imageResourceId: Int
+    ) {
+        val action = ShowsFragmentDirections.actionShowsToShowDetails(
+            username,
+            name,
+            description,
+            imageResourceId
+        )
         findNavController().navigate(action)
     }
 
@@ -155,7 +165,10 @@ class ShowsFragment : Fragment() {
         }
     }
 
-    private fun initLogoutButton(dialog: BottomSheetDialog?, dialogBinding: DialogProfileDetailsBinding) {
+    private fun initLogoutButton(
+        dialog: BottomSheetDialog?,
+        dialogBinding: DialogProfileDetailsBinding
+    ) {
         dialogBinding.logoutButton.setOnClickListener {
             clearPreferences()
             navigateToLoginFragment()
@@ -163,7 +176,10 @@ class ShowsFragment : Fragment() {
         }
     }
 
-    private fun initChangeProfilePhotoButton(dialog: BottomSheetDialog?, dialogBinding: DialogProfileDetailsBinding) {
+    private fun initChangeProfilePhotoButton(
+        dialog: BottomSheetDialog?,
+        dialogBinding: DialogProfileDetailsBinding
+    ) {
         dialogBinding.changeProfilePhotoButton.setOnClickListener {
             cameraPermissionForTakingProfilePicture.launch(arrayOf(Manifest.permission.CAMERA))
             dialog?.dismiss()
@@ -171,45 +187,63 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initBackButton() {
-        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                activity?.finish()
-            }
-        })
+        activity?.onBackPressedDispatcher?.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    activity?.finish()
+                }
+            })
     }
 
     private fun startCameraContractUsingUri() {
         val profilePhotoFile = activity?.let { FileUtil.createImageFile(it) }
-        profilePhotoUri = FileProvider.getUriForFile(requireActivity(), "com.choondrise.shows_hrvoje_brajko" + ".fileprovider", profilePhotoFile!!)
+        profilePhotoUri = FileProvider.getUriForFile(
+            requireActivity(),
+            "com.choondrise.shows_hrvoje_brajko" + ".fileprovider",
+            profilePhotoFile!!
+        )
         // Activity.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         dispatchTakePictureIntent(profilePhotoUri)
     }
 
     private fun dispatchTakePictureIntent(profilePhotoUri: Uri) {
-        val takePictureIntent = ActivityResultContracts.TakePicture().createIntent(requireActivity(), profilePhotoUri)
+        val takePictureIntent =
+            ActivityResultContracts.TakePicture().createIntent(requireActivity(), profilePhotoUri)
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(activity, "An error occurred while opening camera app", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                "An error occurred while opening camera app",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            displayProfilePhoto()
+            changeLogoutButtonIcon()
         }
     }
 
-    private fun displayProfilePhoto() {
-        Toast.makeText(activity, profilePhotoUri.toString(), Toast.LENGTH_LONG).show()
-        val dialogBinding = DialogProfileDetailsBinding.inflate(layoutInflater)
-        Glide.with(this)
-            .load(profilePhotoUri)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
-            .into(dialogBinding.profileIcon)
+    private fun changeProfileIcon(dialogBinding: DialogProfileDetailsBinding) {
 
+        if (this::profilePhotoUri.isInitialized) {
+            Glide.with(this)
+                .load(profilePhotoUri)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .circleCrop()
+                .error(R.drawable.ic_profile_placeholder)
+                .into(dialogBinding.profileIcon)
+        } else {
+            dialogBinding.profileIcon.setImageResource(R.drawable.ic_profile_placeholder)
+        }
+    }
+
+    private fun changeLogoutButtonIcon() {
         Glide.with(this)
             .load(profilePhotoUri)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
