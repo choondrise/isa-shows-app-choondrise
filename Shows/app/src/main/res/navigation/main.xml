@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/login">
+
+    <fragment
+        android:id="@+id/login"
+        android:name="com.choondrise.shows_hrvoje_brajko.ui.LoginFragment"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_login_to_shows"
+            app:destination="@id/shows">
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/shows"
+        android:name="com.choondrise.shows_hrvoje_brajko.ui.ShowsFragment"
+        tools:layout="@layout/fragment_shows">
+
+        <argument
+            android:name="username"
+            app:argType="string">
+
+        </argument>
+
+        <action
+            android:id="@+id/action_shows_to_show_details"
+            app:destination="@id/show_details">
+
+        </action>
+
+        <action
+            android:id="@+id/action_shows_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/login">
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/show_details"
+        android:name="com.choondrise.shows_hrvoje_brajko.ui.ShowDetailsFragment"
+        tools:layout="@layout/fragment_show_details">
+
+        <argument
+            android:name="username"
+            app:argType="string">
+
+        </argument>
+        <argument
+            android:name="showName"
+            app:argType="string">
+
+        </argument>
+        <argument
+            android:name="showDescription"
+            app:argType="string">
+
+        </argument>
+        <argument
+            android:name="imageResourceID"
+            app:argType="integer">
+
+        </argument>
+
+        <action
+            android:id="@+id/action_show_details_to_shows"
+            app:destination="@id/shows">
+
+        </action>
+
+    </fragment>
+
+</navigation>
