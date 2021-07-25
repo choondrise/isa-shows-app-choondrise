@@ -17,7 +17,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     companion object {
-        private const val PASSWORD_MAX_LENGTH = 6
+        const val PASSWORD_MAX_LENGTH = 6
     }
 
     override fun onCreateView(
@@ -42,12 +42,19 @@ class LoginFragment : Fragment() {
         }
 
         initLoginButton()
+        initRegisterButton()
         initTextChangeListeners()
     }
 
     private fun initLoginButton() {
         binding.loginButton.setOnClickListener {
             login(binding.editTextEmail.text.toString(), binding.editTextPassword.text.toString())
+        }
+    }
+
+    private fun initRegisterButton() {
+        binding.registerButton.setOnClickListener {
+            navigateToRegistrationFragment()
         }
     }
 
@@ -102,6 +109,11 @@ class LoginFragment : Fragment() {
 
     private fun navigateToShowsFragment(username: String, password: String, rememberMe: Boolean) {
         val action = LoginFragmentDirections.actionLoginToShows(username, password, rememberMe)
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToRegistrationFragment() {
+        val action = LoginFragmentDirections.actionLoginToRegister()
         findNavController().navigate(action)
     }
 
