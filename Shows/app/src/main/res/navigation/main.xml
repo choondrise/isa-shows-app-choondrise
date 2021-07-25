@@ -15,6 +15,11 @@
             app:destination="@id/shows">
 
         </action>
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/register">
+            
+        </action>
 
     </fragment>
 
@@ -83,6 +88,19 @@
         <action
             android:id="@+id/action_show_details_to_shows"
             app:destination="@id/shows">
+
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/register"
+        android:name="com.choondrise.shows_hrvoje_brajko.ui.RegistrationFragment"
+        tools:layout="@layout/fragment_registration">
+
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/login">
 
         </action>
 
