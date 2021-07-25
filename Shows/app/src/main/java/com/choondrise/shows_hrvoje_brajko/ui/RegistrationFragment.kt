@@ -53,6 +53,7 @@ class RegistrationFragment : Fragment() {
 
     private fun navigateToLoginFragment() {
         val action = RegistrationFragmentDirections.actionRegisterToLogin()
+        action.alreadyRegistered = true
         findNavController().navigate(action)
     }
 

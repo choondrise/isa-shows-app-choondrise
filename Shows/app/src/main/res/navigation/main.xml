@@ -9,6 +9,12 @@
         android:id="@+id/login"
         android:name="com.choondrise.shows_hrvoje_brajko.ui.LoginFragment"
         tools:layout="@layout/fragment_login">
+        <argument
+            android:name="alreadyRegistered"
+            app:argType="boolean"
+            android:defaultValue="false">
+
+        </argument>
 
         <action
             android:id="@+id/action_login_to_shows"
@@ -18,7 +24,7 @@
         <action
             android:id="@+id/action_login_to_register"
             app:destination="@id/register">
-            
+
         </action>
 
     </fragment>

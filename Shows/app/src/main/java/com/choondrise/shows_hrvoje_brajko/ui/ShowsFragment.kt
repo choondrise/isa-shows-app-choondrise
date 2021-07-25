@@ -147,6 +147,7 @@ class ShowsFragment : Fragment() {
 
     private fun navigateToLoginFragment() {
         val action = ShowsFragmentDirections.actionShowsToLogin()
+        action.alreadyRegistered = false
         findNavController().navigate(action)
     }
 

@@ -6,15 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
+import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private val args: LoginFragmentArgs by navArgs()
 
     companion object {
         const val PASSWORD_MAX_LENGTH = 6
@@ -41,6 +46,7 @@ class LoginFragment : Fragment() {
             navigateToShowsFragment(prefs.getString("USERNAME", "").toString(), prefs.getString("PASSWORD", "").toString(), true)
         }
 
+        checkIfAlreadyRegistered()
         initLoginButton()
         initRegisterButton()
         initTextChangeListeners()
@@ -105,6 +111,13 @@ class LoginFragment : Fragment() {
     private fun onTextChange() {
         binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
                 binding.editTextPassword.text.toString().length > PASSWORD_MAX_LENGTH - 1
+    }
+
+    private fun checkIfAlreadyRegistered() {
+        if (args.alreadyRegistered) {
+            binding.registerButton.isVisible = false
+            binding.loginTitle.text = "Registration successful!"
+        }
     }
 
     private fun navigateToShowsFragment(username: String, password: String, rememberMe: Boolean) {
