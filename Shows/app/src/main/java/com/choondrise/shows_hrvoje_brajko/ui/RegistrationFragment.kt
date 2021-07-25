@@ -1,6 +1,5 @@
 package com.choondrise.shows_hrvoje_brajko.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,9 +34,7 @@ class RegistrationFragment : Fragment() {
 
         initRegisterButton()
         initTextChangeListeners()
-
-        // val prefs = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        // val alreadyLoggedIn = prefs.getBoolean("ALREADY_LOGGED_IN", false)
+        initViewModel()
     }
 
     private fun initRegisterButton() {
@@ -50,7 +47,7 @@ class RegistrationFragment : Fragment() {
         if (registrationViewModel.validateEmail(binding.editTextEmail.text.toString(), binding) &&
                 registrationViewModel.validatePassword(binding.editTextPassword.text.toString(), binding) &&
                 registrationViewModel.passwordsMatch(binding)) {
-            navigateToLoginFragment()
+            registrationViewModel.register(binding.editTextEmail.text.toString(), binding.editTextPassword.text.toString())
         }
     }
 
@@ -72,6 +69,19 @@ class RegistrationFragment : Fragment() {
     private fun onTextChange() {
         binding.registerButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
                 binding.editTextPassword.text.toString().length > LoginFragment.PASSWORD_MAX_LENGTH - 1
+    }
+
+    private fun initViewModel() {
+        registrationViewModel.getRegistrationResultLiveData().observe(this.viewLifecycleOwner, { isRegistrationSuccessful ->
+            if (isRegistrationSuccessful) {
+                navigateToLoginFragment()
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

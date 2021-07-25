@@ -9,7 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object ApiModule {
-    private const val BASE_URL = "https://tv-shows.infinum.academy"
+    private const val BASE_URL = "https://tv-shows.infinum.academy/"
 
     lateinit var retrofit: ShowsApiService
 
