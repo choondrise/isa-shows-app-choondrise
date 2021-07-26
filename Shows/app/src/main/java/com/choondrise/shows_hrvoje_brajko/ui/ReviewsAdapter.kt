@@ -9,7 +9,6 @@ import com.choondrise.shows_hrvoje_brajko.models.Review
 
 class ReviewsAdapter(
     private var items: List<Review>,
-    private val onClickCallback: (String, String, String, Int) -> Unit
 ) : RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewsViewHolder {

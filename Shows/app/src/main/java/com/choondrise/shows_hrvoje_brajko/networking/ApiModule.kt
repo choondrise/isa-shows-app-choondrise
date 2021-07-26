@@ -34,7 +34,7 @@ object ApiModule {
                         val token = preferences.getString("ACCESS_TOKEN", null)
                         val uid = preferences.getString("UID", null)
 
-                        if (token != null) builder.header("access-token", token!!)
+                        if (token != null) builder.header("access-token", token)
                         if (client != null) builder.header("client", client)
                         if (uid != null) builder.header("uid", uid)
 

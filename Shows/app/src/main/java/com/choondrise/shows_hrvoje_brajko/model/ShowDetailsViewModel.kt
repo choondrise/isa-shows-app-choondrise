@@ -5,14 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentShowDetailsBinding
+import com.choondrise.shows_hrvoje_brajko.models.DisplayShowResponse
 import com.choondrise.shows_hrvoje_brajko.models.Review
 import com.choondrise.shows_hrvoje_brajko.models.Show
+import com.choondrise.shows_hrvoje_brajko.networking.ApiModule
 import com.choondrise.shows_hrvoje_brajko.ui.ReviewsAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ShowDetailsViewModel : ViewModel() {
 
     private val reviews = mutableListOf<Review>()
-    private var show: Show? = null
 
     private val reviewsLiveData: MutableLiveData<List<Review>> by lazy {
         MutableLiveData<List<Review>>()
@@ -30,24 +34,29 @@ class ShowDetailsViewModel : ViewModel() {
         return showLiveData
     }
 
-    fun initShowLiveData(showOther: Show) {
-        show = showOther
-        showLiveData.value = show
-    }
-
     private fun updateReviewsLiveData() {
         reviewsLiveData.value = reviews
+    }
+
+    fun displayShow(id: String) {
+        ApiModule.retrofit.displayShow(id).enqueue(object: Callback<DisplayShowResponse> {
+            override fun onResponse(
+                call: Call<DisplayShowResponse>,
+                response: Response<DisplayShowResponse>
+            ) {
+                showLiveData.value = response.body()?.show
+            }
+
+            override fun onFailure(call: Call<DisplayShowResponse>, t: Throwable) {
+
+            }
+
+        })
     }
 
     fun addReview(review: Review) {
         reviews.add(review)
         updateReviewsLiveData()
-    }
-
-    fun bindWithView(binding: FragmentShowDetailsBinding) {
-        binding.collapsingToolbar.title = show?.title
-        binding.showDescription.text = show?.description
-        // binding.showImage.setImageResource(show?.imageResourceId!!)
     }
 
     fun updateRating(binding: FragmentShowDetailsBinding, totalRating: Int, adapter: ReviewsAdapter?) {

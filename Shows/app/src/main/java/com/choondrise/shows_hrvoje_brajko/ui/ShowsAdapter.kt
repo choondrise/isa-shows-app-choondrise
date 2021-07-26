@@ -12,7 +12,7 @@ import com.choondrise.shows_hrvoje_brajko.models.Show
 
 class ShowsAdapter(
     private var items: List<Show>,
-    // private val onClickCallback: (String, String?, String) -> Unit
+    private val onClickCallback: (String) -> Unit,
     private val context: Context
 ) : RecyclerView.Adapter<ShowsAdapter.ShowsViewHolder>() {
 
@@ -38,12 +38,11 @@ class ShowsAdapter(
                 .load(show.imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .circleCrop()
                 .error(R.drawable.ic_profile_placeholder)
                 .into(binding.showImage)
 
             binding.root.setOnClickListener {
-                // onClickCallback(show.title, show.description, show.imageUrl)
+                onClickCallback(show.id)
             }
         }
     }

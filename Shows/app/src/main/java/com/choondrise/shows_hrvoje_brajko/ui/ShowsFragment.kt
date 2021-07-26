@@ -96,9 +96,10 @@ class ShowsFragment : Fragment() {
         binding.showRecycler.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = activity?.let {
-            ShowsAdapter(shows, requireActivity())
-                // { name, description, imageResourceId ->
-                // navigateToShowDetailsFragment(name, description, imageResourceId)
+            ShowsAdapter(shows, { id ->
+                navigateToShowDetailsFragment(id)
+            }, requireActivity())
+
         }
         binding.showRecycler.adapter = adapter
     }
@@ -135,17 +136,15 @@ class ShowsFragment : Fragment() {
     }
 
     private fun navigateToShowDetailsFragment(
-        name: String,
-        description: String?,
-        imageResourceId: String?
+        id: String
     ) {
-        /*val action = ShowsFragmentDirections.actionShowsToShowDetails(
+        val prefs = activity?.getSharedPreferences("LOGIN_CREDENTIALS", Context.MODE_PRIVATE) ?: return
+        val action = ShowsFragmentDirections.actionShowsToShowDetails(
+            prefs.getString("UID", "")!!,
             username,
-            name,
-            description,
-            imageResourceId
+            id
         )
-        findNavController().navigate(action)*/
+        findNavController().navigate(action)
     }
 
     private fun navigateToLoginFragment() {
