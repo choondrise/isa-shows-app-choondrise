@@ -1,7 +1,9 @@
 package com.choondrise.shows_hrvoje_brajko.model
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentLoginBinding
 import com.choondrise.shows_hrvoje_brajko.models.LoginRequest
@@ -13,6 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val context = getApplication<Application>().applicationContext
 
     private val loginResultLiveData: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
@@ -28,10 +32,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                     response: Response<LoginResponse>
                 ) {
                     loginResultLiveData.value = response.isSuccessful
-                    val prefs = getApplication<Application>().getSharedPreferences("LOGIN_CREDENTIALS", Context.MODE_PRIVATE) ?: return
+                    val prefs = context.getSharedPreferences("LOGIN_CREDENTIALS", Context.MODE_PRIVATE) ?: return
                     with(prefs.edit()) {
                         putString("CLIENT", response.headers()["client"])
                         putString("ACCESS_TOKEN", response.headers()["access-token"])
+                        putString("UID", response.headers()["uid"])
                         apply()
                     }
                 }

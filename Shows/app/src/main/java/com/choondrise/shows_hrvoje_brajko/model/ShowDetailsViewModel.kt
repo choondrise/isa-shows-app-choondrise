@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentShowDetailsBinding
+import com.choondrise.shows_hrvoje_brajko.models.Review
+import com.choondrise.shows_hrvoje_brajko.models.Show
 import com.choondrise.shows_hrvoje_brajko.ui.ReviewsAdapter
 
 class ShowDetailsViewModel : ViewModel() {
@@ -43,9 +45,9 @@ class ShowDetailsViewModel : ViewModel() {
     }
 
     fun bindWithView(binding: FragmentShowDetailsBinding) {
-        binding.collapsingToolbar.title = show?.name
+        binding.collapsingToolbar.title = show?.title
         binding.showDescription.text = show?.description
-        binding.showImage.setImageResource(show?.imageResourceId!!)
+        // binding.showImage.setImageResource(show?.imageResourceId!!)
     }
 
     fun updateRating(binding: FragmentShowDetailsBinding, totalRating: Int, adapter: ReviewsAdapter?) {

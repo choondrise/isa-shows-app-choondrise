@@ -76,18 +76,33 @@
 
         </argument>
         <argument
-            android:name="showName"
+            android:name="id"
             app:argType="string">
 
         </argument>
         <argument
-            android:name="showDescription"
+            android:name="averageRating"
+            app:argType="float">
+
+        </argument>
+        <argument
+            android:name="description"
             app:argType="string">
 
         </argument>
         <argument
-            android:name="imageResourceID"
+            android:name="imageUrl"
+            app:argType="string">
+
+        </argument>
+        <argument
+            android:name="noOfReviews"
             app:argType="integer">
+
+        </argument>
+        <argument
+            android:name="title"
+            app:argType="string">
 
         </argument>
 

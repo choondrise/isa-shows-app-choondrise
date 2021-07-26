@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
-import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,7 +44,9 @@ class LoginFragment : Fragment() {
         val prefs = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         val alreadyLoggedIn = prefs.getBoolean("ALREADY_LOGGED_IN", false)
         if (alreadyLoggedIn) {
-            navigateToShowsFragment(prefs.getString("USERNAME", "").toString(), prefs.getString("PASSWORD", "").toString(), true)
+            navigateToShowsFragment(prefs.getString("USERNAME", "").toString(),
+                prefs.getString("PASSWORD", "").toString(),
+                true)
         }
 
         checkIfAlreadyRegistered()

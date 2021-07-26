@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentRegistrationBinding
+import com.choondrise.shows_hrvoje_brajko.models.ListShowsResponse
 import com.choondrise.shows_hrvoje_brajko.models.RegisterRequest
 import com.choondrise.shows_hrvoje_brajko.models.RegisterResponse
 import com.choondrise.shows_hrvoje_brajko.networking.ApiModule

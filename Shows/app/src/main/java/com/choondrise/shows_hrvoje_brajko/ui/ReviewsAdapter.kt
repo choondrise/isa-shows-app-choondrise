@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.choondrise.shows_hrvoje_brajko.databinding.ViewReviewItemBinding
-import com.choondrise.shows_hrvoje_brajko.model.Review
+import com.choondrise.shows_hrvoje_brajko.models.Review
 
 class ReviewsAdapter(
     private var items: List<Review>,
@@ -32,14 +32,14 @@ class ReviewsAdapter(
 
     inner class ReviewsViewHolder(private val binding: ViewReviewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Review) {
-            binding.username.text = item.name
-            binding.numberOfStars.text = item.rating.toString()
-            if (item.reviewText.trim().isEmpty()) {
+        fun bind(review: Review) {
+            binding.username.text = review.comment
+            binding.numberOfStars.text = review.rating.toString()
+            if (review.comment.trim().isEmpty()) {
                 binding.reviewDescription.isVisible = false
             } else {
                 binding.reviewDescription.isVisible = true
-                binding.reviewDescription.text = item.reviewText
+                binding.reviewDescription.text = review.comment
             }
         }
     }

@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.choondrise.shows_hrvoje_brajko.databinding.DialogAddReviewBinding
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentShowDetailsBinding
-import com.choondrise.shows_hrvoje_brajko.model.Review
-import com.choondrise.shows_hrvoje_brajko.model.Show
 import com.choondrise.shows_hrvoje_brajko.model.ShowDetailsViewModel
+import com.choondrise.shows_hrvoje_brajko.models.Review
+import com.choondrise.shows_hrvoje_brajko.models.Show
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ShowDetailsFragment : Fragment() {
@@ -70,7 +70,7 @@ class ShowDetailsFragment : Fragment() {
         binding.ratingTotal.isVisible = false
     }
 
-    private fun showBottomSheet() {
+    /*private fun showBottomSheet() {
         val dialog = activity?.let { BottomSheetDialog(it) }
         val dialogBinding = DialogAddReviewBinding.inflate(layoutInflater)
         dialog?.setContentView(dialogBinding.root)
@@ -78,6 +78,7 @@ class ShowDetailsFragment : Fragment() {
             val review = Review(username.toString(),
                 dialogBinding.editTextReview.text.toString().trim(),
                 dialogBinding.ratingBar.rating.toInt())
+
             adapter?.addItem(review)
             viewModel.addReview(review)
             dialog?.dismiss()
@@ -85,16 +86,16 @@ class ShowDetailsFragment : Fragment() {
             viewModel.updateRating(binding, totalRating, adapter)
         }
         dialog?.show()
-    }
+    }*/
 
     private fun getShowFromArgs() {
         username = args.username
-        show = Show(0, args.showName, args.showDescription, args.imageResourceID)
+        show = Show(args.id, args.averageRating, args.description, args.imageUrl, args.noOfReviews, args.title)
     }
 
     private fun initReviewButton() {
         binding.reviewButton.setOnClickListener {
-            showBottomSheet()
+            // showBottomSheet()
         }
     }
 

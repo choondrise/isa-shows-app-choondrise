@@ -1,14 +1,19 @@
 package com.choondrise.shows_hrvoje_brajko.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.choondrise.shows_hrvoje_brajko.R
 import com.choondrise.shows_hrvoje_brajko.databinding.ViewShowItemBinding
-import com.choondrise.shows_hrvoje_brajko.model.Show
+import com.choondrise.shows_hrvoje_brajko.models.Show
 
 class ShowsAdapter(
     private var items: List<Show>,
-    private val onClickCallback: (String, String, Int) -> Unit
+    // private val onClickCallback: (String, String?, String) -> Unit
+    private val context: Context
 ) : RecyclerView.Adapter<ShowsAdapter.ShowsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowsViewHolder {
@@ -26,13 +31,19 @@ class ShowsAdapter(
 
     inner class ShowsViewHolder(private val binding: ViewShowItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Show) {
-            binding.showName.text = item.name
-            binding.showDescription.text = item.description
-            binding.showImage.setImageResource(item.imageResourceId)
+        fun bind(show: Show) {
+            binding.showName.text = show.title
+            binding.showDescription.text = show.description
+            Glide.with(context)
+                .load(show.imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .circleCrop()
+                .error(R.drawable.ic_profile_placeholder)
+                .into(binding.showImage)
 
             binding.root.setOnClickListener {
-                onClickCallback(item.name, item.description, item.imageResourceId)
+                // onClickCallback(show.title, show.description, show.imageUrl)
             }
         }
     }

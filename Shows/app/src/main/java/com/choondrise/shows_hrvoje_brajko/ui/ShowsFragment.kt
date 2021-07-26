@@ -29,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.choondrise.shows_hrvoje_brajko.R
+import com.choondrise.shows_hrvoje_brajko.models.Show
 
 class ShowsFragment : Fragment() {
 
@@ -85,17 +86,19 @@ class ShowsFragment : Fragment() {
     }
 
     private fun initViewModel() {
+        viewModel.listShows()
         viewModel.getShowsLiveData().observe(viewLifecycleOwner, { shows ->
             initRecycleView(shows)
         })
-        viewModel.initShows()
     }
 
     private fun initRecycleView(shows: List<Show>) {
         binding.showRecycler.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        adapter = ShowsAdapter(shows) { name, description, imageResourceId ->
-            navigateToShowDetailsFragment(name, description, imageResourceId)
+        adapter = activity?.let {
+            ShowsAdapter(shows, requireActivity())
+                // { name, description, imageResourceId ->
+                // navigateToShowDetailsFragment(name, description, imageResourceId)
         }
         binding.showRecycler.adapter = adapter
     }
@@ -133,16 +136,16 @@ class ShowsFragment : Fragment() {
 
     private fun navigateToShowDetailsFragment(
         name: String,
-        description: String,
-        imageResourceId: Int
+        description: String?,
+        imageResourceId: String?
     ) {
-        val action = ShowsFragmentDirections.actionShowsToShowDetails(
+        /*val action = ShowsFragmentDirections.actionShowsToShowDetails(
             username,
             name,
             description,
             imageResourceId
         )
-        findNavController().navigate(action)
+        findNavController().navigate(action)*/
     }
 
     private fun navigateToLoginFragment() {
