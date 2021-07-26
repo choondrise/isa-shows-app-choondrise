@@ -1,5 +1,7 @@
 package com.choondrise.shows_hrvoje_brajko.networking
 
+import com.choondrise.shows_hrvoje_brajko.models.LoginRequest
+import com.choondrise.shows_hrvoje_brajko.models.LoginResponse
 import com.choondrise.shows_hrvoje_brajko.models.RegisterRequest
 import com.choondrise.shows_hrvoje_brajko.models.RegisterResponse
 import retrofit2.Call
@@ -10,4 +12,7 @@ interface ShowsApiService {
 
     @POST("/users")
     fun register(@Body request: RegisterRequest): Call<RegisterResponse>
+
+    @POST("/users/sign_in")
+    fun login(@Body request: LoginRequest): Call<LoginResponse>
 }

@@ -11,15 +11,18 @@ import androidx.core.view.marginBottom
 import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.choondrise.shows_hrvoje_brajko.databinding.FragmentLoginBinding
+import com.choondrise.shows_hrvoje_brajko.model.LoginViewModel
 
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val args: LoginFragmentArgs by navArgs()
+    private val loginViewModel: LoginViewModel by viewModels()
 
     companion object {
         const val PASSWORD_MAX_LENGTH = 6
@@ -50,6 +53,7 @@ class LoginFragment : Fragment() {
         initLoginButton()
         initRegisterButton()
         initTextChangeListeners()
+        initViewModel()
     }
 
     private fun initLoginButton() {
@@ -65,9 +69,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun login(username: String, password: String) {
-        if (validateEmail(binding.editTextEmail.text.toString()) &&
-            validatePassword(binding.editTextPassword.text.toString())) {
-            navigateToShowsFragment(username, password, binding.rememberMeCheckbox.isChecked)
+        if (loginViewModel.validateEmail(username, binding) &&
+            loginViewModel.validatePassword(password, binding)) {
+                loginViewModel.login(username, password)
         }
     }
 
@@ -81,33 +85,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun validateEmail(email: String) : Boolean {
-        val regex = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)".toRegex()
-        return if (email.isEmpty()) {
-            binding.emailInput.isErrorEnabled = true
-            binding.emailInput.error = "Email needs to contain at least 1 character"
-            false
-        } else if (!email.matches(regex)){
-            binding.emailInput.isErrorEnabled = true
-            binding.emailInput.error = "Email does not match email regex"
-            false
-        } else {
-            binding.emailInput.error = null
-            true
-        }
-    }
-
-    private fun validatePassword(password: String) : Boolean {
-        return if (password.length < PASSWORD_MAX_LENGTH) {
-            binding.emailInput.isErrorEnabled = true
-            binding.passwordInput.error = "Password needs to contain at least 5 characters"
-            false
-        } else {
-            binding.passwordInput.error = null
-            true
-        }
-    }
-
     private fun onTextChange() {
         binding.loginButton.isEnabled = binding.editTextEmail.text.toString().isNotEmpty() &&
                 binding.editTextPassword.text.toString().length > PASSWORD_MAX_LENGTH - 1
@@ -118,6 +95,18 @@ class LoginFragment : Fragment() {
             binding.registerButton.isVisible = false
             binding.loginTitle.text = "Registration successful!"
         }
+    }
+
+    private fun initViewModel() {
+        loginViewModel.getLoginResultLiveData().observe(this.viewLifecycleOwner, { isLoginSuccessful ->
+            if (isLoginSuccessful) {
+                navigateToShowsFragment(binding.editTextEmail.text.toString(),
+                    binding.editTextPassword.text.toString(),
+                    binding.rememberMeCheckbox.isChecked)
+            } else {
+                Toast.makeText(activity, "Login unsuccessful", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun navigateToShowsFragment(username: String, password: String, rememberMe: Boolean) {
@@ -136,3 +125,4 @@ class LoginFragment : Fragment() {
     }
 
 }
+

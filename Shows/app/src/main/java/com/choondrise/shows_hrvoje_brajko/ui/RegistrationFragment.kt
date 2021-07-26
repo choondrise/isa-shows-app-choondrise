@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -76,6 +77,8 @@ class RegistrationFragment : Fragment() {
         registrationViewModel.getRegistrationResultLiveData().observe(this.viewLifecycleOwner, { isRegistrationSuccessful ->
             if (isRegistrationSuccessful) {
                 navigateToLoginFragment()
+            } else {
+                Toast.makeText(activity, "Registration unsuccessful", Toast.LENGTH_SHORT).show()
             }
         })
     }
