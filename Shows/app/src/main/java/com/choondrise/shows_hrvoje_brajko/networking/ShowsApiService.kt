@@ -19,7 +19,7 @@ interface ShowsApiService {
     fun addReview(@Body request: AddReviewRequest): Call<AddReviewResponse>
 
     @GET("/shows/{show_id}/reviews")
-    fun listReviews(showId: Int): Call<ListReviewsResponse>
+    fun listReviews(@Path("show_id") showId: Int): Call<ListReviewsResponse>
 
     @GET("/shows")
     fun listShows(): Call<ListShowsResponse>

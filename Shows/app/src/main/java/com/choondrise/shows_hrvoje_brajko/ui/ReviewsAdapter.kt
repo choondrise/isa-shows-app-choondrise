@@ -32,7 +32,7 @@ class ReviewsAdapter(
     inner class ReviewsViewHolder(private val binding: ViewReviewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(review: Review) {
-            binding.username.text = review.comment
+            binding.username.text = review.user.email
             binding.numberOfStars.text = review.rating.toString()
             if (review.comment.trim().isEmpty()) {
                 binding.reviewDescription.isVisible = false

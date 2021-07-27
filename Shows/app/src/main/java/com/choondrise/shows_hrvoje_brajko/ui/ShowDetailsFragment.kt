@@ -32,8 +32,8 @@ class ShowDetailsFragment : Fragment() {
     private val viewModel: ShowDetailsViewModel by viewModels()
 
     private var adapter: ReviewsAdapter? = null
-    private var totalRating: Int = 0
     private var show: Show? = null
+    private var review: Review? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,29 +50,39 @@ class ShowDetailsFragment : Fragment() {
         initViewModel()
         initReviewButton()
         initBackButton()
+        initRecycleView(listOf())
     }
 
     private fun initViewModel() {
         viewModel.displayShow(args.id)
+        viewModel.listReviews(args.id.toInt())
 
         viewModel.getReviewsLiveData().observe(viewLifecycleOwner, { reviews ->
             initRecycleView(reviews)
         })
 
+        viewModel.getReviewLiveData().observe(viewLifecycleOwner, {
+            review = viewModel.getReviewLiveData().value
+            review?.let { adapter?.addItem(it) }
+        })
+
         viewModel.getShowLiveData().observe(viewLifecycleOwner, { showOther ->
             show = showOther
-            Toast.makeText(activity, showOther.title, Toast.LENGTH_SHORT).show()
             bindWithView()
         })
     }
 
     private fun initRecycleView(reviews: List<Review>) {
-        binding.reviewRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.reviewRecycler.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = ReviewsAdapter(reviews)
         binding.reviewRecycler.adapter = adapter
-        binding.reviewRecycler.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        binding.ratingBar.isVisible = false
-        binding.ratingTotal.isVisible = false
+        binding.reviewRecycler.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     private fun showBottomSheet() {
@@ -80,19 +90,8 @@ class ShowDetailsFragment : Fragment() {
         val dialogBinding = DialogAddReviewBinding.inflate(layoutInflater)
         dialog?.setContentView(dialogBinding.root)
         dialogBinding.submitButton.setOnClickListener {
-            val review = Review("0",
-                dialogBinding.editTextReview.text.toString(),
-                dialogBinding.ratingBar.rating.toInt(),
-                args.id,
-                User(args.userId, args.username, null))
-
-            viewModel.addReview(review)
-
-            adapter?.addItem(review)
-            viewModel.addReview(review)
+            addReview(dialogBinding)
             dialog?.dismiss()
-            totalRating += dialogBinding.ratingBar.rating.toInt()
-            viewModel.updateRating(binding, totalRating, adapter)
         }
         dialog?.show()
     }
@@ -106,11 +105,23 @@ class ShowDetailsFragment : Fragment() {
     private fun bindWithView() {
         binding.collapsingToolbar.title = show?.title
         binding.showDescription.text = show?.description
+        if (show!!.averageRating != null) {
+            binding.ratingBar.rating = show?.averageRating!!
+            binding.reviewsEmptyText.isVisible = false
+            binding.ratingTotal.isVisible = true
+            binding.ratingTotal.text = adapter?.itemCount.toString() + " REVIEWS, " + show?.averageRating.toString() + " AVERAGE"
+            binding.ratingBar.isVisible = true
+            binding.ratingBar.setIsIndicator(true)
+            binding.reviewsEmptyText.isVisible = false
+        } else {
+            binding.ratingBar.isVisible = false
+            binding.ratingTotal.isVisible = false
+        }
         Glide.with(this)
             .load(show?.imageUrl)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
-            // .error(R.drawable.ic_profile_placeholder)
+            .error(R.drawable.ic_profile_placeholder)
             .into(binding.showImage)
     }
 
@@ -121,6 +132,14 @@ class ShowDetailsFragment : Fragment() {
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
+    }
+
+    private fun addReview(dialogBinding: DialogAddReviewBinding) {
+        viewModel.addReview(
+            dialogBinding.ratingBar.rating.toInt(),
+            dialogBinding.editTextReview.text.toString(),
+            args.id.toInt()
+        )
     }
 
     override fun onDestroyView() {
